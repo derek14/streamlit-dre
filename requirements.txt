@@ -1,0 +1,10 @@
+altair
+pandas==1.5.3
+streamlit
+supabase 
+openai 
+langchain 
+matplotlib
+scipy==1.10.1
+beautifulsoup4
+tabulate

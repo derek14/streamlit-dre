@@ -2,25 +2,24 @@ import streamlit as st
 from utils import ApartmentDatabase
 
 st.title("Dubai Inventory Analysis")
-option = st.selectbox(
+building_option = st.selectbox(
     'Pick a building?',
     ('Act One', 'Creek Vista Grande', 'Crest Grande Tower C', 'Design Quarters', 'The Residence, District One', 'Dunya Tower'))
 
-match option:
-    case 'Creek Vista Grande':
-        building=1
-    case 'Crest Grande Tower C':
-        building=2
-    case 'Design Quarters':
-        building=3
-    case 'The Residence, District One':
-        building=4
-    case 'Dunya Tower':
-        building=5
-    case _:
-        building=0
+if building_option == 'Creek Vista Grande':
+    building = 1
+elif building_option == 'Crest Grande Tower C':
+    building = 2
+elif building_option == 'Design Quarters':
+    building = 3
+elif building_option == 'The Residence, District One':
+    building = 4
+elif building_option == 'Dunya Tower':
+    building = 5
+else:
+    building = 0
 
-st.header(option)
+st.header(building_option)
 apartments_database = ApartmentDatabase(
   url=st.secrets["SUPA_URL"],
   key=st.secrets["SUPA_KEY"],

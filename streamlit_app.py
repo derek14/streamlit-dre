@@ -47,6 +47,17 @@ building_df = apartments_database.retrieve_building_dataframe(building=building)
 recent_data = apartments_database.recent_df(building_df, cutoff=20)
 st.dataframe(apartments_database.format_building_df(recent_data), hide_index=True, use_container_width=True)
 
+st.subheader("Transactions by units")
+st.caption("To look at how a type of unit is doing.")
+unit_options = building_df['unit'].unique().tolist()
+unit_options.sort()
+unit_option = st.selectbox(
+    'Pick a type of unit?',
+    tuple(unit_options))
+building_df = apartments_database.retrieve_building_dataframe(building=building)
+recent_data = apartments_database.recent_df(building_df[building_df['unit']==unit_option], cutoff=20)
+st.dataframe(apartments_database.format_building_df(recent_data), hide_index=True, use_container_width=True)
+
 st.subheader("Transaction Price")
 st.caption("A violin plot is a useful way to see how data is distributed and can help you understand the range, median, and quartiles of the data. (We cap the records to the last 30 to keep it up-to-date)")
 violin_df = apartments_database.format_violin_df(building_df)

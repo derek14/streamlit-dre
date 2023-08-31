@@ -13,6 +13,7 @@ from langchain.prompts.chat import (
 )
 from langchain.chat_models import ChatOpenAI
 import streamlit as st
+import seaborn as sns
 
 @st.cache_data
 def get_sha256_hex(string):
@@ -118,6 +119,13 @@ class ApartmentDatabase():
     df = pd.DataFrame(data.data)
     return df[df["building"]==building]
   
+  def format_violin_df(self, df):
+    df["per_sq_ft"] = df["price"] / df["bua"]
+    df["beds"] = df["beds"].astype(str)
+    df.rename(columns={'per_sq_ft': 'AED per sq ft'}, inplace=True)
+    df.rename(columns={'beds': 'Beds'}, inplace=True)
+    return df.head(30)
+
   def format_bar_df(self, df):
     df['date'] = pd.to_datetime(df[['year', 'month', 'day']])
     df.set_index('date', inplace=True)

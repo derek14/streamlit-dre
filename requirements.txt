@@ -8,3 +8,5 @@ matplotlib
 scipy==1.10.1
 beautifulsoup4
 tabulate
+seaborn
+plotly

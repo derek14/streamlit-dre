@@ -1,5 +1,8 @@
 import streamlit as st
+import seaborn as sns
 from utils import ApartmentDatabase
+import matplotlib.pyplot as plt
+import plotly.express as px
 
 st.title("Dubai Inventory Analysis")
 building_option = st.selectbox(
@@ -44,7 +47,17 @@ building_df = apartments_database.retrieve_building_dataframe(building=building)
 recent_data = apartments_database.recent_df(building_df, cutoff=20)
 st.dataframe(apartments_database.format_building_df(recent_data), hide_index=True, use_container_width=True)
 
+st.subheader("Transaction Price")
+st.caption("A violin plot is a useful way to see how data is distributed and can help you understand the range, median, and quartiles of the data. (We cap the records to the last 30 to keep it up-to-date)")
+violin_df = apartments_database.format_violin_df(building_df)
+# fig, ax = plt.subplots()
+beds_order = ["0", "1", "2", "3", "4", "5"]
+fig = px.violin(violin_df, x="Beds", y="AED per sq ft", points="all")
+
+# sns.violinplot(x="beds", y="per_sq_ft", data=violin_df, inner="box", order=beds_order, ax=ax)
+st.plotly_chart(fig, use_container_width=True)
+
 st.subheader("Transaction Volume")
-st.caption("Transaction volumn aggregated by week.")
+st.caption("Transaction volume aggregated weekly.")
 weekly_counts = apartments_database.format_bar_df(building_df)
 st.bar_chart(weekly_counts)

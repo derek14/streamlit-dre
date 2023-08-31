@@ -40,6 +40,11 @@ st.dataframe(apartments_database.format_prediction_df(prediction_df), hide_index
 
 st.subheader("Recent Transactions")
 st.caption("Last 20 transactions.")
-act_one_df = apartments_database.retrieve_building_dataframe(building=building)
-recent_data = apartments_database.recent_df(act_one_df, cutoff=20)
+building_df = apartments_database.retrieve_building_dataframe(building=building)
+recent_data = apartments_database.recent_df(building_df, cutoff=20)
 st.dataframe(apartments_database.format_building_df(recent_data), hide_index=True, use_container_width=True)
+
+st.subheader("Transaction Volume")
+st.caption("Transaction volumn aggregated by week.")
+weekly_counts = apartments_database.format_bar_df(building_df)
+st.bar_chart(weekly_counts)

@@ -118,6 +118,12 @@ class ApartmentDatabase():
     df = pd.DataFrame(data.data)
     return df[df["building"]==building]
   
+  def format_bar_df(self, df):
+    df['date'] = pd.to_datetime(df[['year', 'month', 'day']])
+    df.set_index('date', inplace=True)
+    weekly_counts = df.resample('W').count()['key']
+    return weekly_counts
+
   def format_prediction_df(self, df):
     df = df[["unit", "min", "max"]]
     df.set_axis(['Unit', 'Lower Bound', 'Upper Bound'], axis='columns', inplace=True)

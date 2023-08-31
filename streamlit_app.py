@@ -29,14 +29,17 @@ apartments_database = ApartmentDatabase(
 )
 
 st.subheader("A.I. Commentary")
+st.caption("Commentary written by GPT-4.")
 commentary_df = apartments_database.retrieve_commentary_dataframe(building=building)
 st.write(commentary_df["commentary"].values[0].replace("$","\$"))
 
 st.subheader("Ensembled Pricing Model")
+st.caption("Regresss and recalibrate - We used AutoML techniques to first identify the best models to extract relations in the data, from there we picked the best 5 models, retrain them with the entire dataset. To properly adjust for the lagged effect in a trending market, we do another recalibration as a final step.")
 prediction_df = apartments_database.retrieve_prediction_dataframe(building=building)
 st.dataframe(apartments_database.format_prediction_df(prediction_df), hide_index=True, use_container_width=True)
 
 st.subheader("Recent Transactions")
+st.caption("Last 20 transactions.")
 act_one_df = apartments_database.retrieve_building_dataframe(building=building)
 recent_data = apartments_database.recent_df(act_one_df, cutoff=20)
 st.dataframe(apartments_database.format_building_df(recent_data), hide_index=True, use_container_width=True)

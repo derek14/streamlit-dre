@@ -103,9 +103,9 @@ class ApartmentDatabase():
 
   @st.cache_data
   def retrieve_building_dataframe(_self, building:int=0):
-    data = _self.table.select("*").execute()
+    data = _self.table.select("*").filter('building', 'eq', building).execute()
     df = pd.DataFrame(data.data)
-    return df[df["building"]==building]
+    return df
   
   @st.cache_data
   def retrieve_prediction_dataframe(_self, building:int=0):
